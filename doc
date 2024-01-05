@@ -1,0 +1,5 @@
+Get all movies = /api/movies
+get single movie = /api/movies/:id
+Create Movie = /api/movies (POST)
+Update Movie = /api/movie/:id (PUT)
+DELETE Movie = /api/movie/:id (DELETE)
