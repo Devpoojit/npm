@@ -40,6 +40,7 @@ app.get("/api/movies/", (req, res) => {
  * Get Single Movie
  */
 app.get("/api/movies/:id", (req, res) => {
+    debugger;
     const id = req.params.id;
     const movie = movies.find((movie) => movie.id === parseInt(id));
     if (!movie) {
