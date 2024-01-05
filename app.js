@@ -1,5 +1,6 @@
 const { response } = require('express');
 const express = require('express'); //
+const movieRouter = require("./routes/movie");
 
 const app = express(); //Contructor of express --> Creates an instance of express called app
 app.use(express.json()); // Express Middlewest
@@ -34,6 +35,7 @@ const anotherLogger = (req, res, next) => {
 
 app.use(logger); // MiddleWare
 // Call next function to move to the next middleware
+app.use(movieRouter); // Express Middlewest
 
 
 /**
@@ -45,58 +47,7 @@ app.get("/", (req, res) => {
     res.send("Hello World from Devpoojit");
 })
 
-app.get("/api/movies/", (req, res) => {
-    res.send(movies);
-})
 
-/**
- * Get Single Movie
- */
-app.get("/api/movies/:id", anotherLogger, (req, res) => {
-    const id = req.params.id;
-    const movie = movies.find((movie) => movie.id === parseInt(id));
-    if (!movie) {
-        res.status(404).send("ID Not Found");
-    }
-    res.send(movie);
-});
-
-app.post("/api/movies", (req, res) => {
-    const movie = req.body;
-    movie.id = movies.length + 1;
-    movies.push(movie);
-    res.send(movie);
-});
-
-/**
- * Not Scalable
- */ 
-// app.get("/api/movies/1", (req, res) => {
-//     res.send(movies[0]);
-// })
-// app.get("/api/movies/2", (req, res) => {
-//     res.send(movies[1]);
-// })
-
-
-app.put("/api/movies/:id", (req, res) => {
-    const id = req.params.id;
-    const movie = movies.find((movie) => movie.id === parseInt(id));
-    movie.title = req.body.title;
-    movie.year = req.body.year;
-    movie.rating = req.body.rating;
-    movie.actors = req.body.actors;
-    res.send(movie);
-});
-
-app.delete("/api/movies/:id", (req, res) => {
-    const id = req.params.id;
-    const movie = movies.find((movie) => movie.id === parseInt(id));
-    const index = movies.indexOf(movie);
-    movies.splice(index, 1);
-    res.send(movie);
-
-});
 
 
 
