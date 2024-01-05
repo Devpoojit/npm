@@ -22,6 +22,19 @@ const movies = [
     }
 ];
 
+const logger = (req, res, next) => {
+    console.log(`${req.method} received on ${req.url} at ${new Date()}`);
+    next(); // Call next function to move to the next middleware. Or Use respnse.send() to end the request. Or throw an error.
+};
+
+const anotherLogger = (req, res, next) => {
+    console.log(`This log is from another logger`);
+    next(); // Call next function to move to the next middleware. Or Use respnse.send() to end the request. Or throw an error.
+}
+
+app.use(logger); // MiddleWare
+// Call next function to move to the next middleware
+
 
 /**
  * @function Call_Back_Function
@@ -39,8 +52,7 @@ app.get("/api/movies/", (req, res) => {
 /**
  * Get Single Movie
  */
-app.get("/api/movies/:id", (req, res) => {
-    debugger;
+app.get("/api/movies/:id", anotherLogger, (req, res) => {
     const id = req.params.id;
     const movie = movies.find((movie) => movie.id === parseInt(id));
     if (!movie) {
